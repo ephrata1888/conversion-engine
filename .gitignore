@@ -1,0 +1,6 @@
+venv/
+cal.com/
+tau2-bench/
+__pycache__/
+*.pyc
+.env
