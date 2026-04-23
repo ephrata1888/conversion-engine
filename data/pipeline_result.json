@@ -2,17 +2,17 @@
   "company": "DataStack AI",
   "prospect": "Jordan Smith",
   "email": "ephratawolde990@gmail.com",
-  "timestamp": "2026-04-23T09:37:26.227889",
+  "timestamp": "2026-04-23T16:51:57.364917",
   "steps": {
     "enrichment": {
       "status": "success",
-      "latency_ms": 1,
+      "latency_ms": 2,
       "segment": 1,
       "ai_maturity": 2
     },
     "competitor_gap": {
       "status": "success",
-      "latency_ms": 48,
+      "latency_ms": 66,
       "peers_analyzed": 13,
       "gaps_found": 3
     },
@@ -24,15 +24,15 @@
     },
     "hubspot": {
       "status": "success",
-      "latency_ms": 18195,
+      "latency_ms": 1953,
       "contact_id": "762728772838"
     },
     "email_sent": {
       "status": "success",
-      "latency_ms": 5743
+      "latency_ms": 1573
     }
   },
-  "total_latency_ms": 23990,
+  "total_latency_ms": 3597,
   "hiring_signal_brief": {
     "company": {
       "name": "DataStack AI",
@@ -57,15 +57,21 @@
             "funding_type": "series_b"
           }
         ],
-        "total_rounds": 1
+        "total_rounds": 1,
+        "confidence": "medium",
+        "confidence_reason": "1 round(s) found in last 180 days"
       },
       "layoffs": {
         "has_recent_layoffs": false,
-        "recent_layoffs": []
+        "recent_layoffs": [],
+        "confidence": "low",
+        "confidence_reason": "0 layoff event(s) found in last 120 days"
       },
       "leadership_change": {
         "has_leadership_change": false,
-        "recent_hires": []
+        "recent_hires": [],
+        "confidence": "low",
+        "confidence_reason": "0 leadership hire(s) found in last 90 days"
       },
       "ai_maturity": {
         "score": 2,
@@ -74,6 +80,12 @@
           "AI/ML tech stack: ['snowflake', 'dbt']",
           "AI leadership: ['Head of AI']"
         ]
+      },
+      "job_posts": {
+        "titles": [],
+        "count": 0,
+        "confidence": "low",
+        "confidence_reason": "0 engineering job posts found"
       }
     },
     "icp_segment": {
@@ -82,7 +94,7 @@
       "confidence": 0.8,
       "reason": "Recent funding + 51-100 employees"
     },
-    "enriched_at": "2026-04-23T09:37:26.229851"
+    "enriched_at": "2026-04-23T16:51:57.367153+00:00"
   },
   "competitor_gap_brief": {
     "prospect_name": "DataStack AI",
@@ -130,7 +142,7 @@
         "business_impact": "Tenacious can provide a dedicated squad within 2 weeks vs 3-4 months for in-house hiring."
       }
     ],
-    "generated_at": "2026-04-23T09:37:26.278315"
+    "generated_at": "2026-04-23T16:51:57.433501"
   },
   "email_content": {
     "subject": "Engineering capacity at DataStack AI \u2014 quick observation",

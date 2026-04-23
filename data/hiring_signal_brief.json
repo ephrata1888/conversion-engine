@@ -1,39 +1,63 @@
 {
   "company": {
-    "name": "Winder Research",
-    "crunchbase_id": "winder-research",
-    "uuid": "644bc78e-4120-4c1c-91f1-08f2f0ab980f",
-    "about": "Winder Research empowers businesses with cloud-native data Science consulting, development and training.",
-    "website": "https://winderresearch.com/",
-    "employees": "",
-    "country": "GB",
-    "industries": "null"
+    "name": "DataStack AI",
+    "crunchbase_id": "datastack-ai",
+    "uuid": "synthetic-001",
+    "about": "DataStack AI builds modern data infrastructure for mid-market SaaS companies.",
+    "website": "https://datastackai.example.com",
+    "employees": "51-100",
+    "country": "US",
+    "industries": "[{\"id\": \"artificial-intelligence\", \"value\": \"Artificial Intelligence\"}, {\"id\": \"enterprise-software\", \"value\": \"Enterprise Software\"}]"
   },
   "signals": {
     "funding": {
-      "has_recent_funding": false,
-      "recent_rounds": [],
-      "total_rounds": 0
+      "has_recent_funding": true,
+      "recent_rounds": [
+        {
+          "announced_on": "2026-02-15",
+          "money_raised": {
+            "currency": "USD",
+            "value": 14000000
+          },
+          "funding_type": "series_b"
+        }
+      ],
+      "total_rounds": 1,
+      "confidence": "medium",
+      "confidence_reason": "1 round(s) found in last 180 days"
     },
     "layoffs": {
       "has_recent_layoffs": false,
-      "recent_layoffs": []
+      "recent_layoffs": [],
+      "confidence": "low",
+      "confidence_reason": "0 layoff event(s) found in last 120 days"
     },
     "leadership_change": {
       "has_leadership_change": false,
-      "recent_hires": []
+      "recent_hires": [],
+      "confidence": "low",
+      "confidence_reason": "0 leadership hire(s) found in last 90 days"
     },
     "ai_maturity": {
-      "score": 0,
+      "score": 2,
+      "confidence": "medium",
+      "signals": [
+        "AI/ML tech stack: ['snowflake', 'dbt']",
+        "AI leadership: ['Head of AI']"
+      ]
+    },
+    "job_posts": {
+      "titles": [],
+      "count": 0,
       "confidence": "low",
-      "signals": []
+      "confidence_reason": "0 engineering job posts found"
     }
   },
   "icp_segment": {
-    "segment": 4,
-    "name": "Specialized capability gaps",
-    "confidence": 0.5,
-    "reason": "No strong signal for segments 1-3"
+    "segment": 1,
+    "name": "Recently-funded Series A/B startup",
+    "confidence": 0.8,
+    "reason": "Recent funding + 51-100 employees"
   },
-  "enriched_at": "2026-04-22T13:34:31.109301"
+  "enriched_at": "2026-04-23T16:51:13.932719+00:00"
 }

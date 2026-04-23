@@ -157,7 +157,7 @@ def run_prospect_pipeline(
     }
     print(f"  Subject: {email_content['subject']}")
     
-    # Step 4: Create HubSpot contact
+    # Step 4: Create HubSpot contact with enrichment data
     print("\n[4/5] Creating HubSpot contact...")
     t0 = time.time()
     hubspot_result = create_or_update_contact(
@@ -166,6 +166,7 @@ def run_prospect_pipeline(
         lastname=prospect_name.split()[-1] if len(prospect_name.split()) > 1 else "",
         company=company_name,
         jobtitle=brief.get("icp_segment", {}).get("name", ""),
+        enrichment_data=brief
     )
     results["steps"]["hubspot"] = {
         "status": "success" if hubspot_result else "error",
