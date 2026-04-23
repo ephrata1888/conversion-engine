@@ -1,0 +1,39 @@
+{
+  "company": {
+    "name": "Winder Research",
+    "crunchbase_id": "winder-research",
+    "uuid": "644bc78e-4120-4c1c-91f1-08f2f0ab980f",
+    "about": "Winder Research empowers businesses with cloud-native data Science consulting, development and training.",
+    "website": "https://winderresearch.com/",
+    "employees": "",
+    "country": "GB",
+    "industries": "null"
+  },
+  "signals": {
+    "funding": {
+      "has_recent_funding": false,
+      "recent_rounds": [],
+      "total_rounds": 0
+    },
+    "layoffs": {
+      "has_recent_layoffs": false,
+      "recent_layoffs": []
+    },
+    "leadership_change": {
+      "has_leadership_change": false,
+      "recent_hires": []
+    },
+    "ai_maturity": {
+      "score": 0,
+      "confidence": "low",
+      "signals": []
+    }
+  },
+  "icp_segment": {
+    "segment": 4,
+    "name": "Specialized capability gaps",
+    "confidence": 0.5,
+    "reason": "No strong signal for segments 1-3"
+  },
+  "enriched_at": "2026-04-22T13:34:31.109301"
+}

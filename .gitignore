@@ -4,3 +4,7 @@ tau2-bench/
 __pycache__/
 *.pyc
 .env
+data/crunchbase_sample.csv
+data/*.csv
+__pycache__/
+*.pyc

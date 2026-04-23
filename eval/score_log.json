@@ -1,0 +1,18 @@
+{
+  "runs": [
+    {
+      "run_name": "baseline_final",
+      "timestamp": "2026-04-22T15:30:00.000000",
+      "model": "openrouter/qwen/qwen3-235b-a22b",
+      "domain": "retail",
+      "notes": "30-task 5-trial baseline, max-concurrency 1, qwen3-235b-a22b",
+      "n_evaluated": 105,
+      "n_infra_errors": 45,
+      "mean_reward": 0.3714,
+      "pass_at_1": 0.3714,
+      "ci_95": 0.0923,
+      "ci_lower": 0.2791,
+      "ci_upper": 0.4637
+    }
+  ]
+}

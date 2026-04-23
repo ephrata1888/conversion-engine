@@ -1,0 +1,17 @@
+{
+  "name": "DataStack AI",
+  "id": "datastack-ai",
+  "uuid": "synthetic-001",
+  "about": "DataStack AI builds modern data infrastructure for mid-market SaaS companies.",
+  "full_description": "DataStack AI helps companies build and scale their data platforms using modern cloud-native tools.",
+  "website": "https://datastackai.example.com",
+  "num_employees": "51-100",
+  "country_code": "US",
+  "industries": "[{\"id\": \"artificial-intelligence\", \"value\": \"Artificial Intelligence\"}, {\"id\": \"enterprise-software\", \"value\": \"Enterprise Software\"}]",
+  "funding_rounds_list": "[{\"announced_on\": \"2026-02-15\", \"money_raised\": {\"currency\": \"USD\", \"value\": 14000000}, \"funding_type\": \"series_b\"}]",
+  "layoff": "[]",
+  "leadership_hire": "[{\"title\": \"VP Engineering\", \"name\": \"Jordan Smith\", \"date\": \"2026-01-10\"}]",
+  "builtwith_tech": "[{\"name\": \"Snowflake\"}, {\"name\": \"dbt\"}, {\"name\": \"Python\"}]",
+  "current_employees": "[{\"name\": \"Jordan Smith\", \"title\": \"VP Engineering\"}, {\"name\": \"Sarah Chen\", \"title\": \"Head of AI\"}]",
+  "contact_email": "jordan@datastackai.example.com"
+}

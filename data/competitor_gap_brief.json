@@ -1,0 +1,38 @@
+{
+  "prospect_name": "DataStack AI",
+  "prospect_ai_maturity": 2,
+  "sector_peers_analyzed": 13,
+  "top_quartile": [
+    {
+      "name": "Wizard Labs",
+      "employees": "",
+      "country": "US",
+      "ai_maturity": 1,
+      "about": "Wizard is a game-changing technology company that uses artificial intelligence to simplify the creat"
+    },
+    {
+      "name": "Semantica",
+      "employees": "1-10",
+      "country": "US",
+      "ai_maturity": 1,
+      "about": "Semantica develops a customer interaction system designed to permit customer service representatives"
+    },
+    {
+      "name": "Coverbase",
+      "employees": "1-10",
+      "country": "US",
+      "ai_maturity": 1,
+      "about": "Coverbase is an artificial intelligence-driven system that helps with risk assessment criteria, tier"
+    }
+  ],
+  "top_quartile_avg_ai_maturity": 1.0,
+  "maturity_gap": -1.0,
+  "specific_gaps": [
+    {
+      "gap": "Engineering capacity",
+      "description": "Based on your job post velocity, your engineering team is scaling faster than in-house hiring can support.",
+      "business_impact": "Tenacious can provide a dedicated squad within 2 weeks vs 3-4 months for in-house hiring."
+    }
+  ],
+  "generated_at": "2026-04-22T14:57:14.437182"
+}

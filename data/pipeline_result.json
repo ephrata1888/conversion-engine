@@ -1,0 +1,142 @@
+{
+  "company": "DataStack AI",
+  "prospect": "Jordan Smith",
+  "email": "ephratawolde990@gmail.com",
+  "timestamp": "2026-04-23T09:37:26.227889",
+  "steps": {
+    "enrichment": {
+      "status": "success",
+      "latency_ms": 1,
+      "segment": 1,
+      "ai_maturity": 2
+    },
+    "competitor_gap": {
+      "status": "success",
+      "latency_ms": 48,
+      "peers_analyzed": 13,
+      "gaps_found": 3
+    },
+    "email_composition": {
+      "status": "success",
+      "latency_ms": 0,
+      "signal_grounded": true,
+      "segment": 1
+    },
+    "hubspot": {
+      "status": "success",
+      "latency_ms": 18195,
+      "contact_id": "762728772838"
+    },
+    "email_sent": {
+      "status": "success",
+      "latency_ms": 5743
+    }
+  },
+  "total_latency_ms": 23990,
+  "hiring_signal_brief": {
+    "company": {
+      "name": "DataStack AI",
+      "crunchbase_id": "datastack-ai",
+      "uuid": "synthetic-001",
+      "about": "DataStack AI builds modern data infrastructure for mid-market SaaS companies.",
+      "website": "https://datastackai.example.com",
+      "employees": "51-100",
+      "country": "US",
+      "industries": "[{\"id\": \"artificial-intelligence\", \"value\": \"Artificial Intelligence\"}, {\"id\": \"enterprise-software\", \"value\": \"Enterprise Software\"}]"
+    },
+    "signals": {
+      "funding": {
+        "has_recent_funding": true,
+        "recent_rounds": [
+          {
+            "announced_on": "2026-02-15",
+            "money_raised": {
+              "currency": "USD",
+              "value": 14000000
+            },
+            "funding_type": "series_b"
+          }
+        ],
+        "total_rounds": 1
+      },
+      "layoffs": {
+        "has_recent_layoffs": false,
+        "recent_layoffs": []
+      },
+      "leadership_change": {
+        "has_leadership_change": false,
+        "recent_hires": []
+      },
+      "ai_maturity": {
+        "score": 2,
+        "confidence": "medium",
+        "signals": [
+          "AI/ML tech stack: ['snowflake', 'dbt']",
+          "AI leadership: ['Head of AI']"
+        ]
+      }
+    },
+    "icp_segment": {
+      "segment": 1,
+      "name": "Recently-funded Series A/B startup",
+      "confidence": 0.8,
+      "reason": "Recent funding + 51-100 employees"
+    },
+    "enriched_at": "2026-04-23T09:37:26.229851"
+  },
+  "competitor_gap_brief": {
+    "prospect_name": "DataStack AI",
+    "prospect_ai_maturity": 0,
+    "sector_peers_analyzed": 13,
+    "top_quartile": [
+      {
+        "name": "Wizard Labs",
+        "employees": "",
+        "country": "US",
+        "ai_maturity": 1,
+        "about": "Wizard is a game-changing technology company that uses artificial intelligence to simplify the creat"
+      },
+      {
+        "name": "Semantica",
+        "employees": "1-10",
+        "country": "US",
+        "ai_maturity": 1,
+        "about": "Semantica develops a customer interaction system designed to permit customer service representatives"
+      },
+      {
+        "name": "Coverbase",
+        "employees": "1-10",
+        "country": "US",
+        "ai_maturity": 1,
+        "about": "Coverbase is an artificial intelligence-driven system that helps with risk assessment criteria, tier"
+      }
+    ],
+    "top_quartile_avg_ai_maturity": 1.0,
+    "maturity_gap": 1.0,
+    "specific_gaps": [
+      {
+        "gap": "AI/ML infrastructure",
+        "description": "Top quartile companies in your sector are investing in ML platforms (Snowflake, dbt, Databricks). Your public signal shows limited adoption.",
+        "business_impact": "Companies with modern data infrastructure ship AI features 3x faster than those without."
+      },
+      {
+        "gap": "Dedicated AI leadership",
+        "description": "Top quartile peers have named AI/ML leadership (Head of AI, VP Data). This role is absent from your public team page.",
+        "business_impact": "Without dedicated AI leadership, AI initiatives tend to stall in proof-of-concept."
+      },
+      {
+        "gap": "Engineering capacity",
+        "description": "Based on your job post velocity, your engineering team is scaling faster than in-house hiring can support.",
+        "business_impact": "Tenacious can provide a dedicated squad within 2 weeks vs 3-4 months for in-house hiring."
+      }
+    ],
+    "generated_at": "2026-04-23T09:37:26.278315"
+  },
+  "email_content": {
+    "subject": "Engineering capacity at DataStack AI \u2014 quick observation",
+    "body": "Hi,\n\nCongratulations on your $14M raise \u2014 that's a signal your engineering roadmap is about to accelerate.\n\nTeams at your stage typically find that in-house hiring can't keep pace with the roadmap \u2014 Tenacious provides dedicated engineering squads that are operational in 2 weeks, not 3 months.\n\nQuick observation from your sector: Top quartile companies in your sector are investing in ML platforms (Snowflake, dbt, Databricks). Your public signal shows limited adoption. Companies with modern data infrastructure ship AI features 3x faster than those without.\n\nWould a 20-minute call this week make sense? I can share what we're seeing from teams at your stage and whether there's a fit.\n\nBest,\nTenacious Consulting and Outsourcing\n",
+    "segment": 1,
+    "ai_maturity_score": 2,
+    "signal_grounded": true
+  }
+}
