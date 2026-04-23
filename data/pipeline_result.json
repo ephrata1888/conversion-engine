@@ -2,17 +2,17 @@
   "company": "DataStack AI",
   "prospect": "Jordan Smith",
   "email": "ephratawolde990@gmail.com",
-  "timestamp": "2026-04-23T16:51:57.364917",
+  "timestamp": "2026-04-23T17:08:10.201802",
   "steps": {
     "enrichment": {
       "status": "success",
-      "latency_ms": 2,
+      "latency_ms": 1,
       "segment": 1,
       "ai_maturity": 2
     },
     "competitor_gap": {
       "status": "success",
-      "latency_ms": 66,
+      "latency_ms": 48,
       "peers_analyzed": 13,
       "gaps_found": 3
     },
@@ -24,15 +24,22 @@
     },
     "hubspot": {
       "status": "success",
-      "latency_ms": 1953,
+      "latency_ms": 1211,
       "contact_id": "762728772838"
     },
     "email_sent": {
       "status": "success",
-      "latency_ms": 1573
+      "latency_ms": 1688
+    },
+    "booking": {
+      "status": "success",
+      "latency_ms": 14669,
+      "booking_id": 18705016,
+      "hubspot_updated": true,
+      "contact_id": "762728772838"
     }
   },
-  "total_latency_ms": 3597,
+  "total_latency_ms": 17622,
   "hiring_signal_brief": {
     "company": {
       "name": "DataStack AI",
@@ -94,7 +101,7 @@
       "confidence": 0.8,
       "reason": "Recent funding + 51-100 employees"
     },
-    "enriched_at": "2026-04-23T16:51:57.367153+00:00"
+    "enriched_at": "2026-04-23T17:08:10.204009+00:00"
   },
   "competitor_gap_brief": {
     "prospect_name": "DataStack AI",
@@ -142,7 +149,7 @@
         "business_impact": "Tenacious can provide a dedicated squad within 2 weeks vs 3-4 months for in-house hiring."
       }
     ],
-    "generated_at": "2026-04-23T16:51:57.433501"
+    "generated_at": "2026-04-23T17:08:10.252961"
   },
   "email_content": {
     "subject": "Engineering capacity at DataStack AI \u2014 quick observation",

@@ -3,6 +3,8 @@ import os
 import time
 from datetime import datetime
 from dotenv import load_dotenv
+from cal_handler import get_available_slots, book_discovery_call
+from hubspot_handler import create_or_update_contact, update_contact_booking
 
 load_dotenv()
 
@@ -190,6 +192,62 @@ def run_prospect_pipeline(
         "status": "success" if email_result else "error",
         "latency_ms": int((time.time() - t0) * 1000)
     }
+    # Step 6: Book discovery call and update HubSpot
+    print("\n[6/6] Booking discovery call and updating HubSpot...")
+    t0 = time.time()
+    
+    contact_id = results["steps"]["hubspot"].get("contact_id")
+    booking_result = None
+    hubspot_update_result = None
+    
+    try:
+        # Get available slots
+        slots = get_available_slots(days_ahead=5)
+        slot_dates = slots.get("data", {}).get("slots", {})
+        
+        # Find first available slot
+        first_slot = None
+        for date, times in slot_dates.items():
+            if times:
+                first_slot = times[0].get("time")
+                break
+        
+        if first_slot:
+            # Book the slot
+            booking_result = book_discovery_call(
+                prospect_name=prospect_name,
+                prospect_email=prospect_email,
+                slot_time=first_slot,
+                notes=f"Auto-booked via conversion engine. ICP: {brief.get('icp_segment', {}).get('name', '')}. AI Maturity: {brief.get('signals', {}).get('ai_maturity', {}).get('score', 0)}"
+            )
+            
+            if booking_result.get("status") == "success":
+                booking_data = booking_result.get("data", {})
+                print(f"  Booking confirmed: ID {booking_data.get('id')} at {booking_data.get('startTime')}")
+                
+                # Update HubSpot with booking details
+                if contact_id and contact_id != "unknown":
+                    hubspot_update_result = update_contact_booking(
+                        contact_id=contact_id,
+                        booking_data=booking_data
+                    )
+                else:
+                    print("  HubSpot update skipped: no valid contact ID")
+            else:
+                print(f"  Booking failed: {booking_result.get('error', 'unknown error')}")
+        else:
+            print("  No available slots found in next 5 days")
+            
+    except Exception as e:
+        print(f"  Booking/HubSpot update error: {e}")
+    
+    results["steps"]["booking"] = {
+        "status": "success" if booking_result and booking_result.get("status") == "success" else "skipped",
+        "latency_ms": int((time.time() - t0) * 1000),
+        "booking_id": booking_result.get("data", {}).get("id") if booking_result else None,
+        "hubspot_updated": hubspot_update_result is not None,
+        "contact_id": contact_id
+    }
     
     # Total latency
     results["total_latency_ms"] = int((time.time() - start_time) * 1000)
@@ -216,3 +274,4 @@ if __name__ == "__main__":
         json.dump(result, f, indent=2)
     
     print("\nFull result saved to data/pipeline_result.json")
+    
