@@ -1,18 +1,38 @@
 {
   "runs": [
     {
-      "run_name": "baseline_final",
-      "timestamp": "2026-04-22T15:30:00.000000",
+      "run_name": "instructor_shared_baseline",
+      "description": "Instructor-provided shared baseline for all TRP1 Week 10 trainees. Used as reference for memo claims.",
+      "model": "pinned dev-tier model",
+      "domain": "retail",
+      "evaluated_simulations": 150,
+      "infra_error_count": 0,
+      "total_tasks": 30,
+      "num_trials": 5,
+      "pass_at_1": 0.7267,
+      "pass_at_1_ci_95": [0.6504, 0.7917],
+      "avg_agent_cost": 0.0199,
+      "p50_latency_seconds": 105.9521,
+      "p95_latency_seconds": 551.6491,
+      "git_commit": "d11a97072c49d093f7b5a3e4fe9da95b490d43ba",
+      "source": "seed/score_log.json — provided by program staff April 22 2026"
+    },
+    {
+      "run_name": "personal_baseline_qwen3",
+      "description": "Personal reproduction check using OpenRouter/Qwen3-235b-a22b. 45 infra errors due to OpenRouter weekly rate limit mid-run.",
       "model": "openrouter/qwen/qwen3-235b-a22b",
       "domain": "retail",
-      "notes": "30-task 5-trial baseline, max-concurrency 1, qwen3-235b-a22b",
-      "n_evaluated": 105,
-      "n_infra_errors": 45,
-      "mean_reward": 0.3714,
-      "pass_at_1": 0.3714,
-      "ci_95": 0.0923,
-      "ci_lower": 0.2791,
-      "ci_upper": 0.4637
+      "evaluated_simulations": 150,
+      "infra_error_count": 45,
+      "total_tasks": 30,
+      "num_trials": 5,
+      "pass_at_1": 0.371,
+      "pass_at_1_ci_95": [0.279, 0.464],
+      "avg_agent_cost": 0.0,
+      "p50_latency_seconds": 67.0,
+      "p95_latency_seconds": 161.0,
+      "git_commit": "d11a97072c49d093f7b5a3e4fe9da95b490d43ba",
+      "note": "Rate limiting reduced valid runs to 105/150. Instructor increased limit after run. For memo claims use instructor_shared_baseline."
     }
   ]
 }

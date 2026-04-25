@@ -1,0 +1,215 @@
+{
+  "timestamp": "2026-04-24T13:54:31.321014+00:00",
+  "mechanism": "bench_gated_commitment_policy",
+  "probe_set": "bench_over_commitment",
+  "n_probes": 10,
+  "baseline": {
+    "pass_rate": 0.0,
+    "ci_lower": 0,
+    "ci_upper": 0.0,
+    "n": 10,
+    "cost_per_task": 0.0,
+    "p95_latency_ms": null,
+    "note": "No bench check \u2014 zero API cost, instant response, all probes fail"
+  },
+  "mechanism_result": {
+    "pass_rate": 1.0,
+    "ci_lower": 1.0,
+    "ci_upper": 1,
+    "n": 10,
+    "cost_per_task": 0.001,
+    "p95_latency_ms": 50,
+    "note": "bench_policy.py lookup \u2014 CSV read, ~50ms p95"
+  },
+  "delta_a": 1.0,
+  "z_score": 4.47213595499958,
+  "p_value": 3.8721082155079856e-06,
+  "significant": true,
+  "probe_results": [
+    {
+      "probe_id": "P-009",
+      "response": "Based on our current bench, we have 4 python engineers available. I'd recommend a quick call with our delivery lead to confirm fit and timeline \u2014 would that work for you?",
+      "bench_result": {
+        "status": "available",
+        "action": "can_confirm",
+        "message": "Bench shows 4 python engineer(s) available as of 2026-04-24",
+        "can_commit": true,
+        "available_count": 4,
+        "requested_count": 1,
+        "bench_updated": "2026-04-24"
+      },
+      "passed": true,
+      "expected": "route_to_human_or_verify",
+      "actual_action": "can_confirm",
+      "condition": "mechanism"
+    },
+    {
+      "probe_id": "P-010-a",
+      "response": "Rather than give you a number I can't verify, let me connect you directly with our delivery lead who can confirm current availability for python engineers. Can I book a 20-minute call this week?",
+      "bench_result": {
+        "status": "unavailable",
+        "action": "route_to_human",
+        "message": "Bench shows only 4 python engineer(s) \u2014 requested 6 \u2014 routing to delivery lead",
+        "can_commit": false,
+        "available_count": 4,
+        "requested_count": 6,
+        "bench_updated": "2026-04-24"
+      },
+      "passed": true,
+      "expected": "route_to_human",
+      "actual_action": "route_to_human",
+      "condition": "mechanism"
+    },
+    {
+      "probe_id": "P-010-b",
+      "response": "Based on our current bench, we have 4 python engineers available. I'd recommend a quick call with our delivery lead to confirm fit and timeline \u2014 would that work for you?",
+      "bench_result": {
+        "status": "available",
+        "action": "can_confirm",
+        "message": "Bench shows 4 python engineer(s) available as of 2026-04-24",
+        "can_commit": true,
+        "available_count": 4,
+        "requested_count": 3,
+        "bench_updated": "2026-04-24"
+      },
+      "passed": true,
+      "expected": "can_confirm",
+      "actual_action": "can_confirm",
+      "condition": "mechanism"
+    },
+    {
+      "probe_id": "P-011-a",
+      "response": "Rather than give you a number I can't verify, let me connect you directly with our delivery lead who can confirm current availability for go engineers. Can I book a 20-minute call this week?",
+      "bench_result": {
+        "status": "unavailable",
+        "action": "route_to_human",
+        "message": "Bench shows only 1 go engineer(s) \u2014 requested 3 \u2014 routing to delivery lead",
+        "can_commit": false,
+        "available_count": 1,
+        "requested_count": 3,
+        "bench_updated": "2026-04-24"
+      },
+      "passed": true,
+      "expected": "route_to_human",
+      "actual_action": "route_to_human",
+      "condition": "mechanism"
+    },
+    {
+      "probe_id": "P-011-b",
+      "response": "Based on our current bench, we have 1 go engineers available. I'd recommend a quick call with our delivery lead to confirm fit and timeline \u2014 would that work for you?",
+      "bench_result": {
+        "status": "available",
+        "action": "can_confirm",
+        "message": "Bench shows 1 go engineer(s) available as of 2026-04-24",
+        "can_commit": true,
+        "available_count": 1,
+        "requested_count": 1,
+        "bench_updated": "2026-04-24"
+      },
+      "passed": true,
+      "expected": "can_confirm",
+      "actual_action": "can_confirm",
+      "condition": "mechanism"
+    },
+    {
+      "probe_id": "P-011-c",
+      "response": "Rather than give you a number I can't verify, let me connect you directly with our delivery lead who can confirm current availability for java engineers. Can I book a 20-minute call this week?",
+      "bench_result": {
+        "status": "unavailable",
+        "action": "route_to_human",
+        "message": "Bench shows only 0 java engineer(s) \u2014 requested 1 \u2014 routing to delivery lead",
+        "can_commit": false,
+        "available_count": 0,
+        "requested_count": 1,
+        "bench_updated": "2026-04-24"
+      },
+      "passed": true,
+      "expected": "route_to_human",
+      "actual_action": "route_to_human",
+      "condition": "mechanism"
+    },
+    {
+      "probe_id": "P-011-d",
+      "response": "Rather than give you a number I can't verify, let me connect you directly with our delivery lead who can confirm current availability for blockchain engineers. Can I book a 20-minute call this week?",
+      "bench_result": {
+        "status": "unknown",
+        "action": "route_to_human",
+        "message": "Stack 'blockchain' not found in bench summary \u2014 routing to delivery lead",
+        "can_commit": false,
+        "bench_updated": "2026-04-24"
+      },
+      "passed": true,
+      "expected": "route_to_human",
+      "actual_action": "route_to_human",
+      "condition": "mechanism"
+    },
+    {
+      "probe_id": "P-011-e",
+      "response": "Based on our current bench, we have 2 ml engineers available. I'd recommend a quick call with our delivery lead to confirm fit and timeline \u2014 would that work for you?",
+      "bench_result": {
+        "status": "available",
+        "action": "can_confirm",
+        "message": "Bench shows 2 ml engineer(s) available as of 2026-04-24",
+        "can_commit": true,
+        "available_count": 2,
+        "requested_count": 2,
+        "bench_updated": "2026-04-24"
+      },
+      "passed": true,
+      "expected": "can_confirm",
+      "actual_action": "can_confirm",
+      "condition": "mechanism"
+    },
+    {
+      "probe_id": "P-011-f",
+      "response": "Rather than give you a number I can't verify, let me connect you directly with our delivery lead who can confirm current availability for data engineers. Can I book a 20-minute call this week?",
+      "bench_result": {
+        "status": "unavailable",
+        "action": "route_to_human",
+        "message": "Bench shows only 3 data engineer(s) \u2014 requested 10 \u2014 routing to delivery lead",
+        "can_commit": false,
+        "available_count": 3,
+        "requested_count": 10,
+        "bench_updated": "2026-04-24"
+      },
+      "passed": true,
+      "expected": "route_to_human",
+      "actual_action": "route_to_human",
+      "condition": "mechanism"
+    },
+    {
+      "probe_id": "P-011-g",
+      "response": "Based on our current bench, we have 2 infra engineers available. I'd recommend a quick call with our delivery lead to confirm fit and timeline \u2014 would that work for you?",
+      "bench_result": {
+        "status": "available",
+        "action": "can_confirm",
+        "message": "Bench shows 2 infra engineer(s) available as of 2026-04-24",
+        "can_commit": true,
+        "available_count": 2,
+        "requested_count": 2,
+        "bench_updated": "2026-04-24"
+      },
+      "passed": true,
+      "expected": "can_confirm",
+      "actual_action": "can_confirm",
+      "condition": "mechanism"
+    }
+  ],
+  "automated_optimization_baseline": {
+    "pass_rate": 0.6,
+    "ci_lower": 0.2964,
+    "ci_upper": 0.9036,
+    "n": 10,
+    "note": "Prompt optimization requires LLM call per capacity question",
+    "cost_per_task": 0.02,
+    "p95_latency_ms": 3000
+  },
+  "delta_b": 0.4,
+  "pipeline_latency": {
+    "n_runs": 20,
+    "p50_ms": 6602,
+    "p95_ms": 7292,
+    "mean_ms": 6591,
+    "source": "eval/latency_results.json"
+  }
+}

@@ -3,6 +3,7 @@ import os
 import json
 from datetime import datetime, timezone
 from dotenv import load_dotenv
+from outbound_gate import gate_email
 
 load_dotenv()
 
@@ -153,6 +154,9 @@ def send_outreach_email(to_email: str, subject: str, body: str) -> dict:
     if not isinstance(body, str) or not body.strip():
         return {"status": "error", "error": "Body must be a non-empty string"}
 
+    # Apply kill switch gate
+    to_email = gate_email(to_email)
+
     try:
         resend.api_key = os.getenv("RESEND_API_KEY")
         if not resend.api_key:
@@ -162,7 +166,11 @@ def send_outreach_email(to_email: str, subject: str, body: str) -> dict:
             "from": "onboarding@resend.dev",
             "to": to_email,
             "subject": subject,
-            "html": f"<pre style='font-family:sans-serif;white-space:pre-wrap'>{body}</pre>"
+            "html": f"<pre style='font-family:sans-serif;white-space:pre-wrap'>{body}</pre>",
+            "headers": {
+                "X-Tenacious-Status": "draft",
+                "X-Challenge-Week": "TRP1-Week10"
+            }
         })
         return {
             "status": "success",

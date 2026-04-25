@@ -1,0 +1,14 @@
+{
+  "last_updated": "2026-04-24",
+  "available_engineers": {
+    "python": 4,
+    "data": 3,
+    "ml": 2,
+    "go": 1,
+    "infra": 2,
+    "frontend": 1,
+    "java": 0,
+    "rust": 0
+  },
+  "notes": "Sample bench summary for testing. Replace with real data from Tenacious."
+}

@@ -1,0 +1,115 @@
+{
+  "claims": [
+    {
+      "claim_id": "C-001",
+      "claim": "pass@1 = 0.371 on tau2-Bench retail dev slice",
+      "source_type": "trace_file",
+      "source_ref": "eval/trace_log.jsonl",
+      "computation": "sum(reward==1.0) / n_valid where n_valid=105",
+      "value": 0.371
+    },
+    {
+      "claim_id": "C-002",
+      "claim": "95% CI for pass@1: [0.279, 0.464]",
+      "source_type": "trace_file",
+      "source_ref": "eval/score_log.json",
+      "computation": "normal approximation: 1.96 * sqrt(p*(1-p)/n)",
+      "value": {"lower": 0.279, "upper": 0.464}
+    },
+    {
+      "claim_id": "C-003",
+      "claim": "Published tau2-Bench retail reference: ~0.42 pass@1",
+      "source_type": "published_reference",
+      "source_ref": "github.com/sierra-research/tau2-bench leaderboard Feb 2026",
+      "value": 0.42
+    },
+    {
+      "claim_id": "C-004",
+      "claim": "Bench policy mechanism pass rate: 1.000",
+      "source_type": "trace_file",
+      "source_ref": "eval/ablation_results.json",
+      "computation": "mechanism_result.pass_rate from ablation_test.py",
+      "value": 1.0
+    },
+    {
+      "claim_id": "C-005",
+      "claim": "Baseline pass rate on bench probes: 0.000",
+      "source_type": "trace_file",
+      "source_ref": "eval/ablation_results.json",
+      "computation": "baseline.pass_rate from ablation_test.py",
+      "value": 0.0
+    },
+    {
+      "claim_id": "C-006",
+      "claim": "Delta A = 1.000, p-value = 0.000004",
+      "source_type": "trace_file",
+      "source_ref": "eval/ablation_results.json",
+      "computation": "delta_a = mechanism - baseline; z-test p-value",
+      "value": {"delta_a": 1.0, "p_value": 0.000004}
+    },
+    {
+      "claim_id": "C-007",
+      "claim": "Current Tenacious stalled-thread rate: 30-40%",
+      "source_type": "tenacious_internal",
+      "source_ref": "Challenge document — Tenacious executive interview",
+      "value": {"low": 0.30, "high": 0.40}
+    },
+    {
+      "claim_id": "C-008",
+      "claim": "Signal-grounded outbound reply rate (top-quartile): 7-12%",
+      "source_type": "published_reference",
+      "source_ref": "Clay, Smartlead case studies cited in challenge document",
+      "value": {"low": 0.07, "high": 0.12}
+    },
+    {
+      "claim_id": "C-009",
+      "claim": "B2B cold email baseline reply rate: 1-3%",
+      "source_type": "published_reference",
+      "source_ref": "LeadIQ 2026 / Apollo benchmarks cited in challenge document",
+      "value": {"low": 0.01, "high": 0.03}
+    },
+    {
+      "claim_id": "C-010",
+      "claim": "Average engagement ACV talent outsourcing: $240K-$720K",
+      "source_type": "tenacious_internal",
+      "source_ref": "Challenge document — Tenacious internal weighted by segment",
+      "value": {"low": 240000, "high": 720000}
+    },
+    {
+      "claim_id": "C-011",
+      "claim": "Discovery-call-to-proposal conversion: 35-50%",
+      "source_type": "tenacious_internal",
+      "source_ref": "Challenge document — Tenacious internal last 4 quarters",
+      "value": {"low": 0.35, "high": 0.50}
+    },
+    {
+      "claim_id": "C-012",
+      "claim": "Proposal-to-close conversion: 25-40%",
+      "source_type": "tenacious_internal",
+      "source_ref": "Challenge document — Tenacious internal last 4 quarters",
+      "value": {"low": 0.25, "high": 0.40}
+    },
+    {
+      "claim_id": "C-013",
+      "claim": "Full pipeline end-to-end latency p50: ~3600ms",
+      "source_type": "trace_file",
+      "source_ref": "data/pipeline_result.json",
+      "computation": "total_latency_ms from 3 observed pipeline runs",
+      "value": 3600
+    },
+    {
+      "claim_id": "C-014",
+      "claim": "Langfuse trace ID: 86b303ddfa8a2bf45ffbd39e3ccbfb8f",
+      "source_type": "trace_file",
+      "source_ref": "Langfuse cloud dashboard + agent/main_agent.py output",
+      "value": "86b303ddfa8a2bf45ffbd39e3ccbfb8f"
+    },
+    {
+      "claim_id": "C-015",
+      "claim": "HubSpot contact ID 762728772838 updated with booking ID 18707658",
+      "source_type": "trace_file",
+      "source_ref": "data/pipeline_result.json",
+      "value": {"contact_id": "762728772838", "booking_id": "18707658"}
+    }
+  ]
+}

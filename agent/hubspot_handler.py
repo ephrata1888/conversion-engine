@@ -18,7 +18,8 @@ def create_or_update_contact(email, firstname, lastname, company, jobtitle="", e
         "lastname": lastname,
         "email": email,
         "company": company,
-        "jobtitle": jobtitle
+        "jobtitle": jobtitle,
+        "tenacious_status": "draft"
     }
 
     if enrichment_data:
@@ -54,8 +55,21 @@ def create_or_update_contact(email, firstname, lastname, company, jobtitle="", e
         if e.status == 409 or "CONFLICT" in str(error_body.get("category", "")):
             match = re.search(r"Existing ID: (\d+)", str(error_body.get("message", "")))
             existing_id = match.group(1) if match else "unknown"
-            print(f"  HubSpot contact already exists: {existing_id}")
-            return {"id": existing_id, "status": "existing"}
+            print(f"  HubSpot contact exists: {existing_id} — updating enrichment fields")
+            # Update existing contact with enrichment fields
+            try:
+                update_props = {k: v for k, v in properties.items()
+                               if k not in ["firstname", "lastname", "email", "company"]}
+                if update_props:
+                    update = SimplePublicObjectInput(properties=update_props)
+                    client.crm.contacts.basic_api.update(
+                        contact_id=existing_id,
+                        simple_public_object_input=update
+                    )
+                    print(f"  Enrichment fields updated on contact {existing_id}")
+            except Exception as update_err:
+                print(f"  Update failed: {update_err}")
+            return {"id": existing_id, "status": "updated"}
         print(f"  HubSpot error {e.status}: {error_body.get('message', str(e))}")
         return None
     except Exception as e:

@@ -1,6 +1,8 @@
 import json
 import os
 import time
+from langfuse import Langfuse
+from datetime import timezone
 from datetime import datetime
 from dotenv import load_dotenv
 from cal_handler import get_available_slots, book_discovery_call
@@ -18,6 +20,13 @@ from hubspot_handler import create_or_update_contact
 from cal_handler import get_available_slots, book_discovery_call
 from enrichment_pipeline import build_hiring_signal_brief
 from competitor_gap_brief import build_competitor_gap_brief
+from langfuse import Langfuse
+
+langfuse_client = Langfuse(
+    public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
+    secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
+    host=os.getenv("LANGFUSE_HOST", "https://cloud.langfuse.com")
+)
 
 def compose_outreach_email(brief: dict, competitor_brief: dict) -> dict:
     """Compose a signal-grounded outreach email based on the hiring signal brief."""
@@ -106,7 +115,12 @@ def run_prospect_pipeline(
     synthetic_path: str = None
 ) -> dict:
     """Run the full prospect pipeline end-to-end."""
-    
+    # Start Langfuse trace
+    trace_id = langfuse_client.create_trace_id()
+    langfuse_client.set_current_trace_io(
+        input={"company": company_name, "prospect_email": prospect_email}
+    )
+
     start_time = time.time()
     results = {
         "company": company_name,
@@ -192,62 +206,17 @@ def run_prospect_pipeline(
         "status": "success" if email_result else "error",
         "latency_ms": int((time.time() - t0) * 1000)
     }
-    # Step 6: Book discovery call and update HubSpot
-    print("\n[6/6] Booking discovery call and updating HubSpot...")
-    t0 = time.time()
-    
-    contact_id = results["steps"]["hubspot"].get("contact_id")
-    booking_result = None
-    hubspot_update_result = None
-    
-    try:
-        # Get available slots
-        slots = get_available_slots(days_ahead=5)
-        slot_dates = slots.get("data", {}).get("slots", {})
-        
-        # Find first available slot
-        first_slot = None
-        for date, times in slot_dates.items():
-            if times:
-                first_slot = times[0].get("time")
-                break
-        
-        if first_slot:
-            # Book the slot
-            booking_result = book_discovery_call(
-                prospect_name=prospect_name,
-                prospect_email=prospect_email,
-                slot_time=first_slot,
-                notes=f"Auto-booked via conversion engine. ICP: {brief.get('icp_segment', {}).get('name', '')}. AI Maturity: {brief.get('signals', {}).get('ai_maturity', {}).get('score', 0)}"
-            )
-            
-            if booking_result.get("status") == "success":
-                booking_data = booking_result.get("data", {})
-                print(f"  Booking confirmed: ID {booking_data.get('id')} at {booking_data.get('startTime')}")
-                
-                # Update HubSpot with booking details
-                if contact_id and contact_id != "unknown":
-                    hubspot_update_result = update_contact_booking(
-                        contact_id=contact_id,
-                        booking_data=booking_data
-                    )
-                else:
-                    print("  HubSpot update skipped: no valid contact ID")
-            else:
-                print(f"  Booking failed: {booking_result.get('error', 'unknown error')}")
-        else:
-            print("  No available slots found in next 5 days")
-            
-    except Exception as e:
-        print(f"  Booking/HubSpot update error: {e}")
-    
+    # Step 6: Discovery call booked only after prospect replies
+    # Booking is triggered by the inbound webhook reply handler
+    # (webhook_server.py → on_reply_received → book_discovery_call)
     results["steps"]["booking"] = {
-        "status": "success" if booking_result and booking_result.get("status") == "success" else "skipped",
-        "latency_ms": int((time.time() - t0) * 1000),
-        "booking_id": booking_result.get("data", {}).get("id") if booking_result else None,
-        "hubspot_updated": hubspot_update_result is not None,
-        "contact_id": contact_id
+        "status": "pending_reply",
+        "note": "Discovery call booked only after prospect replies via email webhook"
     }
+    
+    print("\n[6/6] Awaiting prospect reply...")
+    print("  Discovery call will be booked when prospect replies positively.")
+    print("  Reply webhook: POST /webhooks/email")
     
     # Total latency
     results["total_latency_ms"] = int((time.time() - start_time) * 1000)
@@ -258,6 +227,9 @@ def run_prospect_pipeline(
     print(f"\n{'='*50}")
     print(f"Pipeline complete in {results['total_latency_ms']}ms")
     print(f"{'='*50}")
+    
+    langfuse_client.flush()
+    print(f"  Langfuse trace logged: {trace_id}")
     
     return results
 
@@ -270,7 +242,11 @@ if __name__ == "__main__":
     )
     
     os.makedirs("data", exist_ok=True)
-    with open("data/pipeline_result.json", "w") as f:
+    output_path = os.path.join(
+        os.path.dirname(os.path.dirname(__file__)),
+        "data", "pipeline_result.json"
+    )
+    with open(output_path, "w") as f:
         json.dump(result, f, indent=2)
     
     print("\nFull result saved to data/pipeline_result.json")

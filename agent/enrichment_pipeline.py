@@ -70,6 +70,47 @@ def check_layoffs(company: dict, days: int = 120) -> dict:
         "has_recent_layoffs": len(recent_layoffs) > 0,
         "recent_layoffs": recent_layoffs
     }
+def check_layoffs_fyi(company_name: str, days: int = 120) -> dict:
+    """Check layoffs.fyi CSV for layoff events in last N days."""
+    import csv as csv_module
+    from datetime import timezone
+    
+    csv_path = os.path.join(
+        os.path.dirname(os.path.dirname(__file__)),
+        "data", "layoffs_2026.csv"
+    )
+    
+    if not os.path.exists(csv_path):
+        return {"has_recent_layoffs": False, "recent_layoffs": [], 
+                "source": "layoffs_fyi", "error": "CSV not found"}
+    
+    cutoff = datetime.now() - timedelta(days=days)
+    recent_layoffs = []
+    
+    with open(csv_path, "r", encoding="utf-8") as f:
+        reader = csv_module.DictReader(f)
+        for row in reader:
+            if company_name.lower() in row.get("Company", "").lower():
+                date_str = row.get("Date", "")
+                if date_str:
+                    try:
+                        layoff_date = datetime.strptime(date_str[:10], "%Y-%m-%d")
+                        if layoff_date > cutoff:
+                            recent_layoffs.append({
+                                "date": date_str,
+                                "count": row.get("Laid_Off_Count", ""),
+                                "percentage": row.get("Percentage", ""),
+                                "source": row.get("Source", ""),
+                                "stage": row.get("Stage", "")
+                            })
+                    except:
+                        pass
+    
+    return {
+        "has_recent_layoffs": len(recent_layoffs) > 0,
+        "recent_layoffs": recent_layoffs,
+        "source": "layoffs_fyi"
+    }
 
 def check_leadership_change(company: dict, days: int = 90) -> dict:
     """Check for new CTO/VP Engineering in last N days."""
@@ -152,7 +193,8 @@ def score_ai_maturity(company: dict, job_posts: list = []) -> dict:
     }
 
 def classify_icp_segment(company: dict, funding: dict,
-                          layoffs: dict, leadership: dict) -> dict:
+                          layoffs: dict, leadership: dict,
+                          ai_maturity: dict = None) -> dict:
     """Classify prospect into one of 4 ICP segments."""
     num_employees = company.get("num_employees", "")
 
@@ -182,17 +224,42 @@ def classify_icp_segment(company: dict, funding: dict,
                 "reason": f"Recent layoffs + {num_employees} employees"
             }
 
+    # Segment 4 — only if AI maturity >= 2
+    ai_score = ai_maturity.get("score", 0) if ai_maturity else 0
+    if ai_score >= 2:
+        return {
+            "segment": 4,
+            "name": "Specialized capability gaps",
+            "confidence": 0.5,
+            "reason": "No strong signal for segments 1-3, AI maturity >= 2"
+        }
+    
+    # Abstain — no segment has sufficient confidence
     return {
-        "segment": 4,
-        "name": "Specialized capability gaps",
-        "confidence": 0.5,
-        "reason": "No strong signal for segments 1-3"
+        "segment": "abstain",
+        "name": "No segment match",
+        "confidence": 0.0,
+        "reason": "No qualifying signal found for any segment. Generic exploratory email only."
     }
+
+def check_robots_txt(domain: str, path: str = "/careers") -> bool:
+    """Check if robots.txt allows scraping the given path."""
+    try:
+        import urllib.robotparser
+        rp = urllib.robotparser.RobotFileParser()
+        rp.set_url(f"https://{domain}/robots.txt")
+        rp.read()
+        return rp.can_fetch("TRP1-Week10-Research", f"https://{domain}{path}")
+    except:
+        return True  # If robots.txt unreachable, assume allowed
 
 def scrape_job_posts(website: str) -> list:
     """Scrape job titles from company careers page."""
     if not website:
         return []
+
+    # Extract domain for robots.txt check
+    domain = website.replace("https://", "").replace("http://", "").split("/")[0]
 
     careers_urls = [
         website.rstrip("/") + "/careers",
@@ -204,15 +271,31 @@ def scrape_job_posts(website: str) -> list:
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
+
+        # Set user agent per data handling policy Rule 4
+        context = browser.new_context(
+            user_agent="TRP1-Week10-Research (trainee@trp1.example)"
+        )
+        page = context.new_page()
 
         for url in careers_urls:
             try:
-                page.goto(url, timeout=10000)
-                page.wait_for_timeout(2000)
-                text = page.inner_text("body")[:3000]
+                # Check robots.txt before scraping
+                path = "/" + "/".join(url.split("/")[3:])
+                if not check_robots_txt(domain, path):
+                    print(f"  robots.txt disallows scraping {url} — skipping")
+                    continue
 
-                lines = text.split("\n")
+                page.goto(url, timeout=10000)
+                page.wait_for_timeout(2000)  # Rate limit: 2s between requests
+
+                # Check for captcha
+                page_text = page.inner_text("body")[:3000]
+                if any(w in page_text.lower() for w in ["captcha", "verify you are human", "i am not a robot"]):
+                    print(f"  Captcha detected at {url} — logging as rate_limited")
+                    break
+
+                lines = page_text.split("\n")
                 for line in lines:
                     line = line.strip()
                     if (10 < len(line) < 100 and
@@ -238,6 +321,20 @@ def load_synthetic_or_crunchbase(company_name: str, synthetic_path: str = None) 
             return json.load(f)
     return load_crunchbase_company(company_name)
 
+def load_job_posts_from_snapshot(company_id: str) -> tuple:
+    """Load job posts from frozen April 2026 snapshot."""
+    snapshot_path = os.path.join(
+        os.path.dirname(os.path.dirname(__file__)),
+        "data", "job_posts_snapshot_2026_04_01.json"
+    )
+    if os.path.exists(snapshot_path):
+        with open(snapshot_path, "r") as f:
+            snapshot = json.load(f)
+        company_data = snapshot.get("companies", {}).get(company_id, {})
+        if company_data:
+            return company_data.get("roles", []), company_data
+    return [], {}
+
 def build_hiring_signal_brief(company_name: str, synthetic_path: str = None) -> dict:
     """Build complete hiring signal brief for a prospect."""
     print(f"Building hiring signal brief for: {company_name}")
@@ -250,10 +347,19 @@ def build_hiring_signal_brief(company_name: str, synthetic_path: str = None) -> 
 
     funding = check_recent_funding(company)
     layoffs = check_layoffs(company)
+    
+    # Supplement with layoffs.fyi direct check
+    layoffs_fyi = check_layoffs_fyi(company.get("name", company_name))
+    if layoffs_fyi["has_recent_layoffs"] and not layoffs["has_recent_layoffs"]:
+        layoffs = layoffs_fyi
+        print(f"  Layoff signal from layoffs.fyi: {len(layoffs_fyi['recent_layoffs'])} event(s)")
     leadership = check_leadership_change(company)
-    job_posts = []
+    # Load job posts from frozen snapshot
+    job_posts, job_post_data = load_job_posts_from_snapshot(
+        company.get("id", company_name.lower().replace(" ", "-"))
+    )
     ai_maturity = score_ai_maturity(company, job_posts)
-    segment = classify_icp_segment(company, funding, layoffs, leadership)
+    segment = classify_icp_segment(company, funding, layoffs, leadership, ai_maturity)
 
     brief = {
         "company": {
@@ -286,6 +392,9 @@ def build_hiring_signal_brief(company_name: str, synthetic_path: str = None) -> 
             "job_posts": {
                 "titles": job_posts,
                 "count": len(job_posts),
+                "open_roles_today": job_post_data.get("open_roles_today", len(job_posts)),
+                "open_roles_60_days_ago": job_post_data.get("open_roles_60_days_ago", 0),
+                "velocity_label": "doubled" if job_post_data.get("open_roles_today", 0) >= 2 * max(1, job_post_data.get("open_roles_60_days_ago", 1)) else "increased_modestly" if job_posts else "insufficient_signal",
                 "confidence": "high" if len(job_posts) >= 5 else "medium" if len(job_posts) >= 2 else "low",
                 "confidence_reason": f"{len(job_posts)} engineering job posts found"
             }
@@ -293,6 +402,46 @@ def build_hiring_signal_brief(company_name: str, synthetic_path: str = None) -> 
         "icp_segment": segment,
         "enriched_at": datetime.now(timezone.utc).isoformat()
     }
+    # Honesty flags
+    honesty_flags = []
+    if len(job_posts) < 5:
+        honesty_flags.append("weak_hiring_velocity_signal")
+    if ai_maturity["score"] >= 2 and ai_maturity["confidence"] == "low":
+        honesty_flags.append("weak_ai_maturity_signal")
+    if funding["has_recent_funding"] and layoffs["has_recent_layoffs"]:
+        honesty_flags.append("conflicting_segment_signals")
+        honesty_flags.append("layoff_overrides_funding")
+    if not job_posts:
+        honesty_flags.append("tech_stack_inferred_not_confirmed")
+    brief["honesty_flags"] = honesty_flags
+
+    # Data sources checked
+    brief["data_sources_checked"] = [
+        {"source": "crunchbase_odm", "status": "success",
+         "note": "Static July 2024 snapshot", "fetched_at": company.get("timestamp", "2024-07-03")},
+        {"source": "layoffs_fyi", "status": "success" if not layoffs.get("error") else "error",
+         "fetched_at": datetime.now(timezone.utc).isoformat()},
+        {"source": "job_posts_snapshot", "status": "success" if job_posts else "no_data",
+         "note": "Frozen April 2026 snapshot", "fetched_at": "2026-04-01T00:00:00Z"}
+    ]
+
+    # Bench to brief match
+    from bench_policy import check_bench_capacity, load_bench_summary
+    bench = load_bench_summary()
+    tech_raw = parse_json_field(company.get("builtwith_tech", "[]"))
+    required_stacks = list(set([
+        stack for t in tech_raw
+        for stack in ["python", "go", "data", "ml", "infra"]
+        if stack in t.get("name", "").lower()
+    ]))
+    bench_gaps = [s for s in required_stacks
+                  if not check_bench_capacity(s, 1, bench)["can_commit"]]
+    brief["bench_to_brief_match"] = {
+        "required_stacks": required_stacks,
+        "bench_available": len(bench_gaps) == 0,
+        "gaps": bench_gaps
+    }
+
 
     return brief
 

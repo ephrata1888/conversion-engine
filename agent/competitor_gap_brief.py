@@ -6,18 +6,36 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def get_sector_companies(industries_keywords: list, country_codes: list = ["US", "CA"], 
-                          max_companies: int = 20) -> list:
-    """Find companies in the same sector from Crunchbase data."""
-    matches = []
+def get_sector_companies(industries_keywords: list, country_codes: list = ["US", "CA"],
+                          max_companies: int = 20, prospect_employees: str = None) -> list:
+    """Find companies in the same sector and similar size from Crunchbase data."""
     
+    # Define size bands for filtering
+    size_bands = {
+        "1-10": ["1-10", "11-50"],
+        "11-50": ["1-10", "11-50", "51-100"],
+        "51-100": ["11-50", "51-100", "101-250"],
+        "101-250": ["51-100", "101-250", "251-500"],
+        "251-500": ["101-250", "251-500", "501-1000"],
+        "501-1000": ["251-500", "501-1000", "1001-5000"],
+        "1001-5000": ["501-1000", "1001-5000"],
+    }
+    
+    allowed_sizes = size_bands.get(prospect_employees, None)
+    
+    matches = []
     with open("data/crunchbase_sample.csv", "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
             industries = row.get("industries", "").lower()
             country = row.get("country_code", "")
+            employees = row.get("num_employees", "")
             
-            if (country in country_codes and 
+            # Size filter — only compare to similar-sized companies
+            if allowed_sizes and employees and employees not in allowed_sizes:
+                continue
+            
+            if (country in country_codes and
                 any(k.lower() in industries for k in industries_keywords)):
                 matches.append(row)
             
@@ -64,7 +82,8 @@ def build_competitor_gap_brief(prospect: dict) -> dict:
     print(f"Finding competitors in: {industry_keywords}")
     
     # Find sector peers
-    peers = get_sector_companies(industry_keywords)
+    prospect_employees = prospect.get("num_employees", prospect.get("employees", None))
+    peers = get_sector_companies(industry_keywords, prospect_employees=prospect_employees)
     
     if not peers:
         # Fallback to tech companies

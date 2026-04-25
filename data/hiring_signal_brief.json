@@ -39,18 +39,31 @@
       "confidence_reason": "0 leadership hire(s) found in last 90 days"
     },
     "ai_maturity": {
-      "score": 2,
-      "confidence": "medium",
+      "score": 3,
+      "confidence": "high",
       "signals": [
         "AI/ML tech stack: ['snowflake', 'dbt']",
-        "AI leadership: ['Head of AI']"
+        "AI leadership: ['Head of AI']",
+        "AI job posts: 2 open roles"
       ]
     },
     "job_posts": {
-      "titles": [],
-      "count": 0,
-      "confidence": "low",
-      "confidence_reason": "0 engineering job posts found"
+      "titles": [
+        "Senior ML Engineer",
+        "Data Platform Engineer",
+        "Backend Engineer (Python)",
+        "MLOps Engineer",
+        "Senior Data Scientist",
+        "Engineering Manager - Data",
+        "AI Product Manager",
+        "Staff Software Engineer"
+      ],
+      "count": 8,
+      "open_roles_today": 8,
+      "open_roles_60_days_ago": 3,
+      "velocity_label": "doubled",
+      "confidence": "high",
+      "confidence_reason": "8 engineering job posts found"
     }
   },
   "icp_segment": {
@@ -59,5 +72,32 @@
     "confidence": 0.8,
     "reason": "Recent funding + 51-100 employees"
   },
-  "enriched_at": "2026-04-23T16:51:13.932719+00:00"
+  "enriched_at": "2026-04-25T17:24:29.389765+00:00",
+  "honesty_flags": [],
+  "data_sources_checked": [
+    {
+      "source": "crunchbase_odm",
+      "status": "success",
+      "note": "Static July 2024 snapshot",
+      "fetched_at": "2024-07-03"
+    },
+    {
+      "source": "layoffs_fyi",
+      "status": "success",
+      "fetched_at": "2026-04-25T17:24:29.389785+00:00"
+    },
+    {
+      "source": "job_posts_snapshot",
+      "status": "success",
+      "note": "Frozen April 2026 snapshot",
+      "fetched_at": "2026-04-01T00:00:00Z"
+    }
+  ],
+  "bench_to_brief_match": {
+    "required_stacks": [
+      "python"
+    ],
+    "bench_available": true,
+    "gaps": []
+  }
 }

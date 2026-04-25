@@ -2,17 +2,17 @@
   "company": "DataStack AI",
   "prospect": "Jordan Smith",
   "email": "ephratawolde990@gmail.com",
-  "timestamp": "2026-04-23T17:08:10.201802",
+  "timestamp": "2026-04-25T17:29:51.507173",
   "steps": {
     "enrichment": {
       "status": "success",
-      "latency_ms": 1,
+      "latency_ms": 16,
       "segment": 1,
-      "ai_maturity": 2
+      "ai_maturity": 3
     },
     "competitor_gap": {
       "status": "success",
-      "latency_ms": 48,
+      "latency_ms": 53,
       "peers_analyzed": 13,
       "gaps_found": 3
     },
@@ -24,22 +24,19 @@
     },
     "hubspot": {
       "status": "success",
-      "latency_ms": 1211,
+      "latency_ms": 4037,
       "contact_id": "762728772838"
     },
     "email_sent": {
       "status": "success",
-      "latency_ms": 1688
+      "latency_ms": 1537
     },
     "booking": {
-      "status": "success",
-      "latency_ms": 14669,
-      "booking_id": 18705016,
-      "hubspot_updated": true,
-      "contact_id": "762728772838"
+      "status": "pending_reply",
+      "note": "Discovery call booked only after prospect replies via email webhook"
     }
   },
-  "total_latency_ms": 17622,
+  "total_latency_ms": 5647,
   "hiring_signal_brief": {
     "company": {
       "name": "DataStack AI",
@@ -81,18 +78,31 @@
         "confidence_reason": "0 leadership hire(s) found in last 90 days"
       },
       "ai_maturity": {
-        "score": 2,
-        "confidence": "medium",
+        "score": 3,
+        "confidence": "high",
         "signals": [
           "AI/ML tech stack: ['snowflake', 'dbt']",
-          "AI leadership: ['Head of AI']"
+          "AI leadership: ['Head of AI']",
+          "AI job posts: 2 open roles"
         ]
       },
       "job_posts": {
-        "titles": [],
-        "count": 0,
-        "confidence": "low",
-        "confidence_reason": "0 engineering job posts found"
+        "titles": [
+          "Senior ML Engineer",
+          "Data Platform Engineer",
+          "Backend Engineer (Python)",
+          "MLOps Engineer",
+          "Senior Data Scientist",
+          "Engineering Manager - Data",
+          "AI Product Manager",
+          "Staff Software Engineer"
+        ],
+        "count": 8,
+        "open_roles_today": 8,
+        "open_roles_60_days_ago": 3,
+        "velocity_label": "doubled",
+        "confidence": "high",
+        "confidence_reason": "8 engineering job posts found"
       }
     },
     "icp_segment": {
@@ -101,7 +111,34 @@
       "confidence": 0.8,
       "reason": "Recent funding + 51-100 employees"
     },
-    "enriched_at": "2026-04-23T17:08:10.204009+00:00"
+    "enriched_at": "2026-04-25T17:29:51.522343+00:00",
+    "honesty_flags": [],
+    "data_sources_checked": [
+      {
+        "source": "crunchbase_odm",
+        "status": "success",
+        "note": "Static July 2024 snapshot",
+        "fetched_at": "2024-07-03"
+      },
+      {
+        "source": "layoffs_fyi",
+        "status": "success",
+        "fetched_at": "2026-04-25T17:29:51.522352+00:00"
+      },
+      {
+        "source": "job_posts_snapshot",
+        "status": "success",
+        "note": "Frozen April 2026 snapshot",
+        "fetched_at": "2026-04-01T00:00:00Z"
+      }
+    ],
+    "bench_to_brief_match": {
+      "required_stacks": [
+        "python"
+      ],
+      "bench_available": true,
+      "gaps": []
+    }
   },
   "competitor_gap_brief": {
     "prospect_name": "DataStack AI",
@@ -149,13 +186,13 @@
         "business_impact": "Tenacious can provide a dedicated squad within 2 weeks vs 3-4 months for in-house hiring."
       }
     ],
-    "generated_at": "2026-04-23T17:08:10.252961"
+    "generated_at": "2026-04-25T17:29:51.577930"
   },
   "email_content": {
     "subject": "Engineering capacity at DataStack AI \u2014 quick observation",
     "body": "Hi,\n\nCongratulations on your $14M raise \u2014 that's a signal your engineering roadmap is about to accelerate.\n\nTeams at your stage typically find that in-house hiring can't keep pace with the roadmap \u2014 Tenacious provides dedicated engineering squads that are operational in 2 weeks, not 3 months.\n\nQuick observation from your sector: Top quartile companies in your sector are investing in ML platforms (Snowflake, dbt, Databricks). Your public signal shows limited adoption. Companies with modern data infrastructure ship AI features 3x faster than those without.\n\nWould a 20-minute call this week make sense? I can share what we're seeing from teams at your stage and whether there's a fit.\n\nBest,\nTenacious Consulting and Outsourcing\n",
     "segment": 1,
-    "ai_maturity_score": 2,
+    "ai_maturity_score": 3,
     "signal_grounded": true
   }
 }

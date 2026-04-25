@@ -1,0 +1,50 @@
+{
+  "challenge_week": "TRP1 Week 10",
+  "trainee": "Ephrata Wolde",
+  "period": "2026-04-22 to 2026-04-25",
+  "llm_spend": {
+    "dev_tier": {
+      "provider": "OpenRouter",
+      "model": "qwen/qwen3-235b-a22b",
+      "usage": "tau2-bench baseline runs + ablation tests",
+      "estimated_cost_usd": 4.00,
+      "runs": 150,
+      "note": "LiteLLM pricing not mapped for this model. Estimated from token counts."
+    },
+    "pipeline_runs": {
+      "provider": "OpenRouter",
+      "model": "qwen/qwen3-235b-a22b",
+      "usage": "20 prospect pipeline runs for latency measurement",
+      "estimated_cost_usd": 0.60,
+      "runs": 20
+    }
+  },
+  "infrastructure_spend": {
+    "resend": {"cost_usd": 0.00, "note": "Free tier"},
+    "africa_talking": {"cost_usd": 0.02, "note": "Sandbox test SMS"},
+    "hubspot": {"cost_usd": 0.00, "note": "Developer sandbox free"},
+    "cal_com": {"cost_usd": 0.00, "note": "Cloud free tier"},
+    "langfuse": {"cost_usd": 0.00, "note": "Free tier 50K traces"},
+    "openrouter": {"cost_usd": 4.60, "note": "LLM calls only"}
+  },
+  "total_spend_usd": 4.62,
+  "cost_per_prospect": 0.04,
+  "cost_per_qualified_lead": {
+    "formula": "cost_per_prospect / (reply_rate * call_conversion)",
+    "values": {
+      "cost_per_prospect": 0.04,
+      "reply_rate": 0.07,
+      "call_conversion": 0.35
+    },
+    "result": 1.63,
+    "target": 5.00,
+    "penalty_threshold": 8.00,
+    "status": "PASS",
+    "pipeline_latency": {
+      "p50_seconds": 6.6,
+      "p95_seconds": 7.3,
+      "n_runs": 20,
+      "source": "eval/latency_results.json"
+    }
+  }
+}

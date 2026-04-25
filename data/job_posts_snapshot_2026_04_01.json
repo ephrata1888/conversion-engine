@@ -1,0 +1,23 @@
+{
+  "snapshot_date": "2026-04-01",
+  "source": "BuiltIn + Wellfound crawl, frozen April 1 2026",
+  "companies": {
+    "datastack-ai": {
+      "open_roles_today": 8,
+      "open_roles_60_days_ago": 3,
+      "velocity_label": "doubled",
+      "roles": [
+        "Senior ML Engineer",
+        "Data Platform Engineer",
+        "Backend Engineer (Python)",
+        "MLOps Engineer",
+        "Senior Data Scientist",
+        "Engineering Manager - Data",
+        "AI Product Manager",
+        "Staff Software Engineer"
+      ],
+      "ai_adjacent_count": 4,
+      "source_urls": ["https://builtin.com/company/datastack-ai/jobs"]
+    }
+  }
+}

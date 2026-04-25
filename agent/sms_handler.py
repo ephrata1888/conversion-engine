@@ -3,6 +3,7 @@ import os
 import json
 from datetime import datetime, timezone
 from dotenv import load_dotenv
+from outbound_gate import gate_sms
 
 load_dotenv()
 
@@ -84,8 +85,10 @@ def send_sms(to_number: str, message: str,
                 "reason": "SMS reserved for warm leads with prior email engagement",
                 "to": to_number
             }
+    
 
     try:
+        to_number = gate_sms(to_number)
         response = requests.post(
             "https://api.sandbox.africastalking.com/version1/messaging",
             headers={

@@ -3,6 +3,7 @@ import os
 import json
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+from outbound_gate import gate_booking
 
 load_dotenv()
 
@@ -42,6 +43,7 @@ def book_discovery_call(
     slot_time: str,
     notes: str = ""
 ) -> dict:
+    prospect_email = gate_booking(prospect_email)
     """Book a discovery call for a prospect."""
     payload = {
         "eventTypeId": int(CAL_EVENT_TYPE_ID),
